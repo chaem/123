@@ -1,4 +1,2 @@
-#test123
-#hello, my name is chaemin
-
-
+#Hello, My name is Lee chae min.
+# My first 'C Programming' started this folder.
