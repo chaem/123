@@ -39,18 +39,26 @@ void map_printCell(int rawdata)
 		printf(" ");
 		break;
 			
-		case 1: //wall
+		case 1: // wall
 		printf("#");
 		break;
 	
-		case 2: //door
-		printf("m");
+		case 2: // open door
+		printf("M");
 		break;
 		
-		case 3:
+		case 3: // me
 		printf("A");
 		break;
-					
+		
+		case 4: // locked door
+		printf("m");			
+		break;
+
+		case 5: // key
+		printf("Y");
+		break;
+
 		default:
 		printf(" ");
 		break;
