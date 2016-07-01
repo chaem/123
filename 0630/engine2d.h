@@ -30,4 +30,46 @@ int drawMyBox(int nXpos,int nYpos,int nColor,int nSize)
 
 	}
 }
+
+// tile map engine
+void map_printCell(int rawdata)
+{
+	switch(rawdata) {
+		case 0: //
+		printf(" ");
+		break;
+			
+		case 1: //wall
+		printf("#");
+		break;
+	
+		case 2: //door
+		printf("m");
+		break;
+		
+		case 3:
+		printf("A");
+		break;
+					
+		default:
+		printf(" ");
+		break;
+		}
+}
+
+void map_drawAll(int *pMap) //pointer
+{
+	int ix, iy;
+	
+	for(iy=0; iy<8; iy++) { //0~7
+		for(ix=0; ix<8; ix++) { //0~7
+			map_printCell(pMap[ix+iy*8]); //*****
+			//printf("%d",world_map[ix+iy*8]); //*8 map size
+		}
+		printf("\r\n");
+	
+	}
+
+}
+
 #endif
