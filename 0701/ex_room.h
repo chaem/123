@@ -1,18 +1,17 @@
-#ifndef __EXITROOM_H__
+#ifndef __EXIT_ROOM_H__
 #define __EXIT_ROOM_H__
 
-
-int buffer_map[64]; //***
+int buffer_map[64];
 
 //0 ready
-//1 play
-//2 clear
-//3 over
+//1 start
+//2 over
+//3 ?
 int nFSM = 0;
 
-int player_xpos = 1;
-int player_ypos = 5;
-int player_inven; //0=none / 1=have key
+int player_xpos;
+int player_ypos;
+int player_inven; //0 - none , 1 - key
 
 void move_player(char cmd)
 {
@@ -22,67 +21,63 @@ void move_player(char cmd)
 	switch(cmd)
 	{
 		case 'i':
-		printf("¿ß∑Œ ¿Ãµø«ﬂΩ¿¥œ¥Ÿ \r\n");
-		player_ypos -= 1;
-		break;
-
+			player_ypos -=1;
+			break;
 		case 'j':
-		printf("øﬁ¬ ¿∏∑Œ ¿Ãµø«ﬂΩ¿¥œ¥Ÿ \r\n");
-		player_xpos -= 1;
-		break;
-
-		case 'l':
-		printf("ø¿∏•¬ ¿∏∑Œ ¿Ãµø«ﬂΩ¿¥œ¥Ÿ \r\n");
-		player_xpos += 1;
-		break;
-
+			player_xpos -=1;
+			break;
 		case 'k':
-		printf("æ∆∑°∑Œ ¿Ãµø«ﬂΩ¿¥œ¥Ÿ \r\n");
-		player_ypos += 1;
-		break;
-
+			player_xpos += 1;
+			break;
+		case 'm':
+			player_ypos += 1;
+			break;
 	}
 
-	switch(buffer_map[player_xpos + player_ypos*8])
-	{
-		//space
-		case 0:
-		break;
+	switch(buffer_map[ player_xpos + player_ypos*8 ] ) {
 
-		//can't through the wall
-		case 1:
-		player_ypos = old_ypos;
-		player_xpos = old_xpos;
-		break;
-		
-		//door - clear
-		case 2:
-		printf("Victory \r\n");
-		nFSM = 2;
-		break;
+		case 0: //space
+			break;
+		case 1: //wall
+			player_ypos = old_ypos;
+			player_xpos = old_xpos;
+			break;
+		case 2: //door
+			if(player_inven = 0)
+			{
+			printf("We need a key \r\n");
+			player_ypos = old_ypos;
+			player_xpos = old_xpos;
+			} 
+			else if(player_inven = 1)
+			{
+				printf("Victory! \r\n");
 
+			}
+			break;
+			
 		case 4:
-			if(player_inven == 1) {
-				printf("Misson Clear \r\n");
+			if(player_inven ==1) {
+				printf("ÎØ∏ÏÖòÌÅ¥Î¶¨Ïñ¥ \r\n");
 				nFSM = 2;
-
-			} else {
+			}
+			else {
 				player_ypos = old_ypos;
 				player_xpos = old_xpos;
 
 			}
-		break;
-		
-		case 5: //take key - disappear key
-		printf("we have a key! \r\n");
-		player_inven = 1;
-		
-		break;
+			break;
+		case 5:
+			printf("ÌÇ§Î•º ÏñªÏóàÏäµÎãàÎã§. \r\n");
+			player_inven = 1;
+
+			break;
 
 	}
-	
-	buffer_map[player_xpos + player_ypos*8] = 3; //location "A"
+
+	buffer_map[ player_xpos + player_ypos*8 ] = 3; //3π (User) ∞Ëº” ¬ÔæÓ¡‹
 
 }
 
 #endif
+

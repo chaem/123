@@ -40,22 +40,26 @@ void map_printCell(int rawdata)
 		break;
 			
 		case 1: // wall
-		printf("#");
+		setColor(31,43);
+		printf("¢È");
 		break;
 	
-		case 2: // open door
-		printf("M");
+		case 2: // locked door
+		setColor(36,40);
+		printf("m");
 		break;
 		
 		case 3: // me
-		printf("A");
+		setColor(37,40);
+		printf("O");
 		break;
 		
-		case 4: // locked door
-		printf("m");			
+		case 4: // opened door
+		printf("M");			
 		break;
 
 		case 5: // key
+		setColor(33,40);
 		printf("Y");
 		break;
 

@@ -5,9 +5,9 @@
 
 /*
  1 : wall (#)
- 2 : opend door (M)
- 3 : gamer (A)
- 4 : locked door (m)
+ 2 : locked door (m)
+ 3 : gamer (U)
+ 4 : opened door (M)
  5 : open key (Y)
  */
 
@@ -19,6 +19,17 @@ int world_map[] = {
 	1,0,0,1,0,0,0,2,
 	1,0,0,1,0,0,0,1,
 	1,0,0,0,0,5,0,1,
+	1,0,0,0,0,0,0,1,
+	1,1,1,1,1,1,1,1
+};
+
+int key_map[] = {
+	1,1,1,1,1,1,1,1,
+	1,0,0,0,0,0,0,1,
+	1,0,0,1,0,0,0,1,
+	1,0,0,1,0,0,0,2,
+	1,0,0,1,0,0,0,1,
+	1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,
 	1,1,1,1,1,1,1,1
 };
@@ -36,6 +47,7 @@ int main()
 
 	while(bLoop)
 	{
+
 		switch(nFSM) {
 			case 0:
 			printf("Welcome to %s. \r\n %d \r\n",game_name,game_version);
@@ -43,7 +55,9 @@ int main()
 			break;
 			
 			case 1:
-			printf("명령을 선택하세요.\r\n(i(up),j(left),l(right)\r\n,k(down),s(show map),q(quit)\r\n");
+			map_drawAll(buffer_map);
+			setColor(0,0);
+			printf("명령을 선택하세요.\r\n(i(up),j(left),l(right)\r\n,k(down),q(quit)\r\n");
 			break;
 			
 			case 2:
@@ -53,11 +67,11 @@ int main()
 
 		for(int i = 0; i < 64; i++)	{
 			buffer_map[i] = world_map[i]; //copy / original - world_map
-		
+
 		}
 
 		scanf("%c",&cmd);
-		getchar();	
+		getchar(); //중복방지	
 		
 		if(nFSM == 0) //ready
 		{
@@ -67,12 +81,12 @@ int main()
 				player_ypos = 5;
 				player_xpos = 1;
 				player_inven = 0; //none key
-				printf("game start!");
+				printf("game start! \r\n");
 				break;
 				
 				case 'x':
 				bLoop = 0;
-				printf("bye \r\n");
+				printf("see you later! \r\n");
 				break;
 			}
 		}
@@ -80,14 +94,9 @@ int main()
 			move_player(cmd);
 		
 			switch(cmd) {
-				case 's':
-				printf("맵을 보여줍니다 \r\n");
-				map_drawAll(buffer_map);
-				break;
-
 				case 'q':
 				bLoop = 0;
-				printf("bye bye \r\n");
+				printf("see you later! \r\n");
 				break;
 			}
 
