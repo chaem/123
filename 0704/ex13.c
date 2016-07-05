@@ -8,7 +8,7 @@ void reset
 
 	}
 
-}
+};
 
 int main()
 {

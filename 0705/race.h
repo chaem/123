@@ -1,0 +1,35 @@
+#ifndef __RACING_GAME__
+#define __RACING_GAME__
+
+
+void drawGame(int mx, int my,char *pBuffer) {
+	//rendering *
+	gotoxy(1,1);
+	int x, y;
+	for (y=0; y<my; y++) {
+		for (x=0; x<my; x++) {
+			switch (pBuffer[mx*y+x]) {
+				case 0:
+					putchar('.');
+					break;
+
+				case 1:
+					putchar('#');
+					break;
+
+				case 2:
+					putchar('A');
+					break;
+
+			}
+
+		}
+		printf("\r\n");
+
+	}
+
+
+
+}
+
+#endif
