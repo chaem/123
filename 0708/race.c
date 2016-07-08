@@ -13,46 +13,34 @@
 
 char screen_buffer[8*8];
 
+struct timespec work_timer;
+double acc_tick, last_tick;
 double rock_acc_tick;
+
 int rock_pos_x, rock_pos_y;
 int rock_pos_table[8] = {1,5,2,7,3,5,2,6}; 
 int rock_cur_table_index = 0;
 
+struct timespec work_timer;
+set_conio_terminal_mode();
+	
+int bLoop = 1;
 int car_posx, car_posy;
 
-int main()
-{
-	//buffer reset
-	for(int i=0; i<64; i++) {
-		screen_buffer[i] = 0;
+static int nFSM = 0; //status
+static int nStep = 0'
 
-	}
-	
-	//define time
-	struct timespec work_timer;
-	set_conio_terminal_mode();
-	
-	int bLoop = 1;
-	//time
-	double acc_tick, last_tick;
-	acc_tick = last_tick = 0;
+void rg_PlayGame(double delta_tick) {
+	switch (nStep) {
+		case 0:
+		nStep++;
+		system("clear");
+		break;
 
-	system("clear");
+		case 1:
 
-	car_posy = 4;
-	car_posx = 2;
 
-	rock_pos_y = 0;
-	rock_pos_x = rock_pos_table[rock_cur_table_index];
-
-	while (bLoop) {
-		//time
-		clock_gettime(CLOCK_MONOTONIC,&work_timer);
-		double cur_tick = work_timer.tv_sec +
-		(double)(work_timer.tv_nsec * 1e-9);
-		double delta_tick = cur_tick - last_tick;
-		last_tick = cur_tick;
-		
+		//user input	
 		if (kbhit() != 0) {
 			char ch = getch();
 			if (ch == 'q') { // quit
@@ -63,11 +51,11 @@ int main()
 
 			} else if (ch == 'n') { // down
 				car_posy += 1;
-			
+
 			}
 
 		}
-		
+
 		//obstacle - move
 		rock_acc_tick += delta_tick;
 		if (rock_acc_tick > 0.5) {
@@ -106,6 +94,68 @@ int main()
 			acc_tick = 0;
 			drawGame(8,8,screen_buffer);
 		}
+
+	}
+
+}
+
+void rg_apply_mainTitle() {
+	switch (nStep) {
+		case 0:
+		puts("press to start");
+		nStep = 1;
+		break;
+
+		case 1:
+		if (kbhit() != 0) {
+			char ch = getch();
+			nFSM = 1;
+			nStep = 0;
+
+		}
+		break;
+
+	}
+
+}
+
+int main()
+{
+	//buffer reset
+	for(int i=0; i<64; i++) {
+		screen_buffer[i] = 0;
+
+	}
+	
+	set_conio_terminal_mode();
+	
+	acc_tick = last_tick = 0;
+	system("clear");
+
+	car_posy = 4;
+	car_posx = 2;
+
+	rock_pos_y = 0;
+	rock_pos_x = rock_pos_table[rock_cur_table_index];
+
+	while (bLoop) {
+		//timing
+		clock_gettime(CLOCK_MONOTONIC,&work_timer);
+		double cur_tick = work_timer.tv_sec +
+		(double)(work_timer.tv_nsec * 1e-9);
+		double delta_tick = cur_tick - last_tick;
+		last_tick = cur_tick;
+	
+		if (nFSM == 0) { //ready
+			rg_apply_mainTitle(delta_tick);	
+					
+		} else if (nFSM == 1) { //game start
+			rg_PlayGame(delta_tick);
+
+		} else {
+
+		}
+
 	}
 
 	return 0;
