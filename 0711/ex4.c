@@ -33,6 +33,7 @@ int main()
 {
 	int bLoop = 1;
 
+
 	MapObject.m_header.m_nSkima = 1;  // skima - file fomat version
 	MapObject.m_pBuf = NULL;  // reset
 	char TilePalette[] = {'.', '#', '@', '%'};
@@ -93,10 +94,15 @@ int main()
 
 		} else if (!strcmp(pTemp,"save")) {
 			//save filename
+			FILE *savef = 
 
 		} else if (!strcmp(pTemp,"load")) {
 			//load filename
-
+			FILE *loadf = fopen("map.txt","r");
+		
+			char szStr[128];
+			int num;
+			fread(loadf,"%d,%s \r\n",&num,szStr);
 		}
 		
 	}	
