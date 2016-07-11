@@ -46,10 +46,10 @@ void rg_PlayGame(double delta_tick) {
 			if (ch == 'q') { // quit
 				bLoop = 0;
 
-			} else if (ch == 'u') { // up
+			} else if (ch == 'j') { // left
 				car_posy -= 1;
 
-			} else if (ch == 'n') { // down
+			} else if (ch == 'l') { // right
 				car_posy += 1;
 
 			}
@@ -100,8 +100,18 @@ void rg_PlayGame(double delta_tick) {
 }
 
 void rg_apply_mainTitle() {
+
+	char game_name = "Drag Racing";
+	double game_version = "1.01";
+	char game_version2 = 'a';
+	
+
 	switch (nStep) {
 		case 0:
+		printf("%s \r\n",game_name);
+		printf("%.2lf",game_version);
+		printf("%c \r\n",game_verison2);
+
 		puts("press to start");
 		nStep = 1;
 		break;
@@ -121,6 +131,8 @@ void rg_apply_mainTitle() {
 
 int main()
 {
+	
+
 	//buffer reset
 	for(int i=0; i<64; i++) {
 		screen_buffer[i] = 0;
