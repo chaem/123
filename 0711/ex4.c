@@ -105,12 +105,8 @@ int main()
 				return 1;
 
 			}
-			MapObject.m_header.m_nWidth = atoi(strtok(NULL," "));
-			MapObject.m_header.m_nHeight = atoi(strtok(NULL," "));
-			MapObject.m_pBuf = malloc( 
-			MapObject.m_header.m_nHeight * MapObject.m_header.m_nWidth );
 
-			fwrite(m_pBuf,sizeof(_S_MAP_OBJECT),1,sf);	
+			fwrite( ,sizeof(_S_MAP_OBJECT),1,sf);	
 			fclose(sf);
 
 		}
@@ -122,8 +118,7 @@ int main()
 				return 1;
 
 			}
-			while (1) {
-
+			fgets();
 			}
 			fclose(lf);
 
