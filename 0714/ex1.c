@@ -68,17 +68,17 @@ int main()
 				vy /= c;
 		
 				missile_fire(&gMissileObject,
-				fire_x, fire_y, 1.0,
-				vx, vy,
+				fire_x, fire_y,
+				10.0, vx, vy,
 				10);
 					
 			}
 			else if (ch == 'a') {
-				target x -= 1;
+				targetx -= 1;
 
 			}
 			else if (ch == 'd') {
-				target x += 1;
+				targetx += 1;
 
 			}
 
@@ -89,13 +89,13 @@ int main()
 
 		// time calculate
 		acc_tick += delta_tick;
-		if(acc_tick > 1.0) {
+		if(acc_tick > 0.1) {
 			//puts("tick...\r");
 			map_drawTile(&gScreenBuffer[0],0,0,&gScreenBuffer[1]);
 			missile_draw(&gMissileObject,&gScreenBuffer[1]);	
 			gotoxy(0,0);
 			
-			map_PutTile(&gScreenBuffer[1],fire_x,fire_y,5);
+			map_PutTile(&gScreenBuffer[1],fire_x,fire_y,1);
 			map_PutTile(&gScreenBuffer[1],targetx,targety,5);
 
 			map_dump(&gScreenBuffer[1],Default_Tilepalete);

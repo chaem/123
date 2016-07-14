@@ -17,9 +17,6 @@ void Plane_init(_S_Plane *pObj, _S_MAP_OBJECT *pBody, int x, int y)
 	pObj->m_pBody = pBody;
 	pObj->m_nYpos = y;
 	pObj->m_nXpos = x;
-		
-	pObj->fpApply = Plane_Apply;
-	pObj->fpDraw = Plane_Draw;
 
 }
 

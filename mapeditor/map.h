@@ -7,10 +7,12 @@ typedef struct {
 	int m_nHeight;
 }_S_MAP_HEADER;
 
-// define
+
 typedef struct _S_MAP_OBJECT {
 	_S_MAP_HEADER m_header;
 	char *m_pBuf;
+
+//define
 	int (*fpLoad)(struct _S_MAP_OBJECT *, char *);
 	int (*fpSave)(struct _S_MAP_OBJECT *, char *);
 	
@@ -20,8 +22,8 @@ typedef struct _S_MAP_OBJECT {
 	
 	void (*fpDrawTile)(struct _S_MAP_OBJECT *, int , int , struct _S_MAP_OBJECT *);
 	void (*fpDrawTile_trn)(struct _S_MAP_OBJECT *, int , int , struct _S_MAP_OBJECT *);
-	void (*fpDrawTile_mirror_v)(struct _S_MAP_OBJECT *, int , int , _S_MAP_OBJECT *);
-	void (*fpDrawTile_mirror_h)(struct _S_MAP_OBJECT *, int , int , _S_MAP_OBJECT *);
+	void (*fpDrawTile_mirror_v)(struct _S_MAP_OBJECT *, int , int , struct _S_MAP_OBJECT *);
+	void (*fpDrawTile_mirror_h)(struct _S_MAP_OBJECT *, int , int , struct _S_MAP_OBJECT *);
 
 }_S_MAP_OBJECT;
 
