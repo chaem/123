@@ -42,8 +42,8 @@ double deltaTick)
 				
 			}
 
-			pObj->m_fYpos -= deltaTick * pObj->m_fSpeed; // speed=1  1s - 1 / =2  2s - 2 
-		
+			pObj->m_fYpos += deltaTick * (pObj->m_fSpeed * pObj->m_fvy); // speed=1  1s - 1 / =2  2s - 2 
+			pObj->m_fXpos += deltaTick * (pObj->m_fSpeed * pObj->m_fvx);
 		}
 
 		break;
@@ -66,7 +66,10 @@ void missile_draw(_S_MISSILE_OBJECT *pObj, _S_MAP_OBJECT *pMapBuf)
 
 }
 
-void missile_fire(_S_MISSILE_OBJECT *pObj, int x, int y, double speed, double vx, double vy, double lifeLimit)
+void missile_fire(_S_MISSILE_OBJECT *pObj,
+int x, int y,
+double speed, double vx, double vy,
+double lifeLimit)
 {
 	pObj->m_nFSM = 1;  //shoot
 	pObj->m_nStep = 0;
