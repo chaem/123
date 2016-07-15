@@ -22,10 +22,12 @@ _S_MAP_OBJECT gScreenBuffer[2];  //screen
 _S_MAP_OBJECT gPlayer;  //player
 _S_MAP_OBJECT gTower;  //tower
 _S_MAP_OBJECT gMissile;  //missile
+_S_MAP_OBJECT gFollow_missile;  //follow_missile
 
 _S_Plane gPlayerObject;
 _S_TOWER gTowerObject;
 _S_MISSILE_OBJECT gMissileObject;  //m_obj
+_S_FOLLOW_MISSILE_OBJECT gFollow_missileObject;
 
 int main()
 {
@@ -59,6 +61,11 @@ int main()
 	map_load(&gMissile,"missile.dat");  //not
 	missile_init(&gMissileObject,0,0,0,&gMissile);
 
+	// follow_missile
+	map_init(&gFollow_missile);
+	map_load(&gFollow_missile,"follow_missile.dat");
+	follow_missile_init(&gFollow_missileObject,0,0,0,&gFollow_missile);
+
 	system("clear");	
 
 	while(bLoop) {
@@ -68,6 +75,7 @@ int main()
 			(double)(work_timer.tv_nsec * 1e-9);
 		double delta_tick = cur_tick - last_tick;
 		last_tick = cur_tick;
+
 		//input
 		if(kbhit() != 0) {
 			char ch = getch();
@@ -88,7 +96,17 @@ int main()
 				20.0, vx, vy,
 				10);
 					
-			}
+			} /*
+			else if (ch == 'l') {
+				double
+
+				follow_missile_fire(&gFollow_missileObject,
+				20.0,tower_x, tower_y,
+				20.0, vx, vy, theta,
+				10)
+
+
+			} */
 
 			Plane_Apply(&gPlayerObject,delta_tick,ch);
 
@@ -96,6 +114,7 @@ int main()
 
 		// apply location
 		missile_apply(&gMissileObject,delta_tick);
+
 
 		// time calculate
 		acc_tick += delta_tick;
