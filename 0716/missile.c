@@ -97,7 +97,7 @@ void follow_missile_init(_S_FOLLOW_MISSILE_OBJECT *pObj, double x, double y, dou
 }
 
 void follow_missile_apply(_S_FOLLOW_MISSILE_OBJECT *pObj,
-double deltaTick)
+double deltaTick, int x)
 {
 	switch (pObj->m_nFSM) {  //0:sleep, 1:active
 		case 0:
@@ -118,6 +118,17 @@ double deltaTick)
 
 			pObj->m_fYpos += deltaTick * (pObj->m_fSpeed * pObj->m_fvy); // speed=1  1s - 1 / =2  2s - 2 
 			pObj->m_fXpos += deltaTick * (pObj->m_fSpeed * pObj->m_fvx);
+		}
+
+		if (pObj->m_fYpos < 20) {
+			if (x > pObj->m_fXpos) {
+				pObj->m_fXpos += 1;
+
+			}
+			else if (x < pObj->m_fXpos) {
+				pObj->m_fXpos -= 1;
+			}
+
 		}
 
 		break;
@@ -143,7 +154,6 @@ void follow_missile_draw(_S_FOLLOW_MISSILE_OBJECT *pObj, _S_MAP_OBJECT *pMapBuf)
 void follow_missile_fire(_S_FOLLOW_MISSILE_OBJECT *pObj,
 int x, int y,
 double speed, double vx, double vy,
-int mx, int my, double theta,
 double lifeLimit)
 {
 	pObj->m_nFSM = 1;  //shoot
@@ -152,9 +162,6 @@ double lifeLimit)
 	pObj->m_fYpos = (double)y;
 	pObj->m_fvx = vx;
 	pObj->m_fvy = vy;
-	pObj->m_x = (double)mx;
-	pObj->m_y = (double)my;
-	pObj->m_theta = theta;
 	pObj->m_fSpeed = speed;
 	pObj->m_fLifeLimit = lifeLimit;
 

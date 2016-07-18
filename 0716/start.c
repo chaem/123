@@ -21,12 +21,12 @@ int bLoop = 1;
 _S_MAP_OBJECT gScreenBuffer[2];  //screen
 _S_MAP_OBJECT gPlayer;  //player
 _S_MAP_OBJECT gTower;  //tower
-_S_MAP_OBJECT gMissile;  //missile
+//_S_MAP_OBJECT gMissile;  //missile
 _S_MAP_OBJECT gFollow_missile;  //follow_missile
 
 _S_Plane gPlayerObject;
 _S_TOWER gTowerObject;
-_S_MISSILE_OBJECT gMissileObject;  //m_obj
+//_S_MISSILE_OBJECT gMissileObject;  //m_obj
 _S_FOLLOW_MISSILE_OBJECT gFollow_missileObject;
 
 int main()
@@ -37,29 +37,29 @@ int main()
 
 	for (int i=0; i<2; i++) {
 		map_init(&gScreenBuffer[i]);
-		map_new(&gScreenBuffer[i],50,20);
+		map_new(&gScreenBuffer[i],40,35);
 
 	}
 	// plane
 	int plane_x, plane_y;
-	plane_x = 5;
-	plane_y = 8;
+	plane_x = 20;
+	plane_y = 5;
 	map_init(&gPlayer);
 	map_load(&gPlayer,"plane.dat");  //not
 	Plane_init(&gPlayerObject,&gPlayer,plane_x,plane_y);  // ?
 	
 	// tower
 	int tower_x, tower_y;
-	tower_x = 40;
-	tower_y = 15;
+	tower_x = 20;
+	tower_y = 30;
 	map_init(&gTower);
 	map_load(&gTower,"tower.dat");  //not
 	Tower_init(&gTowerObject,&gTower,tower_x,tower_y);
 
 	// missile
-	map_init(&gMissile);
-	map_load(&gMissile,"missile.dat");  //not
-	missile_init(&gMissileObject,0,0,0,&gMissile);
+	//map_init(&gMissile);
+	//map_load(&gMissile,"missile.dat");  //not
+	//missile_init(&gMissileObject,0,0,0,&gMissile);
 
 	// follow_missile
 	map_init(&gFollow_missile);
@@ -83,49 +83,49 @@ int main()
 				bLoop = 0;
 				puts("bye~ \r");
 			}
-			else if (ch == 'p') {
-				double vx, vy, c;
+
+
+			else if (ch == 'l') {
+				plane_x = gPlayerObject.m_nYpos;
+				plane_y = gPlayerObject.m_nXpos;
+
+				double vx, vy, d;
 				vx = plane_x - tower_x;
 				vy = plane_y - tower_y;
-				c = sqrt(vx*vx + vy*vy);
-				vx /= c;
-				vy /= c;
-		
-				missile_fire(&gMissileObject,
-				tower_x, tower_y,
-				20.0, vx, vy,
-				10);
-					
-			} /*
-			else if (ch == 'l') {
-				double
+				d = sqrt(vx*vx + vy*vy);
+
+				vx /= d;
+				vy /= d;
 
 				follow_missile_fire(&gFollow_missileObject,
-				20.0,tower_x, tower_y,
-				20.0, vx, vy, theta,
-				10)
+				tower_x, tower_y,
+				15.0, vx, vy,
+				10);
 
+				
 
-			} */
+			}
 
 			Plane_Apply(&gPlayerObject,delta_tick,ch);
 
 		}
 
 		// apply location
-		missile_apply(&gMissileObject,delta_tick);
-
+		// missile_apply(&gMissileObject,delta_tick,plane_x);
+		follow_missile_apply(&gFollow_missileObject,delta_tick,plane_x);
 
 		// time calculate
 		acc_tick += delta_tick;
 		if(acc_tick > 0.1) {
 			//puts("tick...\r");
 			map_drawTile(&gScreenBuffer[0],0,0,&gScreenBuffer[1]);
-			
-			Plane_Draw(&gPlayerObject,&gScreenBuffer[1]);
+			follow_missile_draw(&gFollow_missileObject,&gScreenBuffer[1]);
 			Tower_Draw(&gTowerObject,&gScreenBuffer[1]);
-			missile_draw(&gMissileObject,&gScreenBuffer[1]);
+
 			gotoxy(0,0);
+			Tower_Draw(&gTowerObject,&gScreenBuffer[1]);
+			Plane_Draw(&gPlayerObject,&gScreenBuffer[1]);
+			//missile_draw(&gMissileObject,&gScreenBuffer[1]);
 	
 			map_dump(&gScreenBuffer[1],Default_Tilepalete);
 			acc_tick = 0;

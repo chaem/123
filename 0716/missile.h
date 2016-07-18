@@ -37,7 +37,6 @@ typedef struct
 	double m_y;
 
 	double m_fSpeed;
-	double m_theta;  // direct (sin-cos)
 	double m_faccLifeTime;  // present life time
 	double m_fLifeLimit;  // life
 
@@ -60,14 +59,13 @@ double lifeLimit);
 
 void follow_missile_init(_S_FOLLOW_MISSILE_OBJECT *pObj, double x, double y, double speed, _S_MAP_OBJECT *pBody);
 
-void follow_missile_apply(_S_FOLLOW_MISSILE_OBJECT *pObj, double deltaTick);
+void follow_missile_apply(_S_FOLLOW_MISSILE_OBJECT *pObj, double deltaTick, int x);
 
 void follow_missile_draw(_S_FOLLOW_MISSILE_OBJECT *pObj, _S_MAP_OBJECT *pMapBuf);
 
 void follow_missile_fire(_S_FOLLOW_MISSILE_OBJECT *pObj,
 int x, int y,
 double speed, double vx, double vy,
-double mx, double my, double theta,
 double lifeLimit);
 
 #endif
