@@ -27,14 +27,8 @@ void Plane_Apply(_S_Plane *pObj,double deltaTick,char key_input)
 				case 'd':
 					pObj->m_fXpos += 1;
 					break;
-				case 'w':
-					pObj->m_fYpos -= 1;
-					break;
-				case 's':
-					pObj->m_fYpos += 1;
-					break;
-			}
 
+			}
 
 			break;
 

@@ -1,6 +1,9 @@
 #ifndef __ENGIINE_H__
 #define __ENGIINE_H__
 
+void titleCell(int data);
+void draw_mainTitle(int *dt);
+
 //----------async key--------------
 void reset_terminal_mode();
 void set_conio_terminal_mode();
