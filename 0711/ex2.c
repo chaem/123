@@ -11,25 +11,32 @@
 #include "../0708/engine2d.h" 
 
 char pstr[] = {
-	0,0,0,1,0,0,0,0,	
-	0,0,0,1,0,0,1,0,
-	0,0,0,1,0,1,1,0,
-	0,0,0,1,0,0,1,0,
-	0,0,1,0,0,0,0,0,
-	0,0,1,0,0,0,0,0,
-	0,0,1,0,0,1,0,0,
-	0,1,0,0,1,1,1,0,
-	0,1,0,0,0,1,0,0,
-	0,1,0,0,0,0,0,0,
-	0,1,0,0,0,0,0,0
-}; // 8 * 11
+	0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,	
+	0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,
+	0,0,0,1,0,1,1,0,0,0,0,1,0,0,1,0,
+	0,0,0,1,0,0,1,0,0,0,0,1,1,1,1,0,
+	0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,
+	0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,
+	0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,
+	0,1,0,0,1,1,1,0,0,0,0,1,0,0,0,0,
+	0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,
+	0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,
+	0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0
+}; // 16 * 11
 
-void putTile(int sy, int ey, int sx, int ex, int width, char *ptrBuf)
+void putTile2(int sy, int ey, int sx, int ex, int width, char *ptrBuf)
 {	
 	int ix, iy;
+	/*
 	for (iy = sy; iy < ey; iy++) {
 		for (ix = sx; ix < ex; ix++) {
 			if (pstr[ (iy*width)+ix ] == 0) {
+				putchar('.');		
+			}
+	*/
+	for (ix = sx; ix < ex; ix++) {
+		for (iy = sy; iy < ey; iy++) {
+			if (pstr[ (ix*width)+iy ] == 0) {
 				putchar('.');		
 			} else {
 				putchar('@');
@@ -75,11 +82,12 @@ int main()
 		last_tick = cur_tick;
 		acc_tick += delta_tick;
 
-		if (acc_tick > 1.0) {
+		// move tile
+		if (acc_tick > 0.2) {
 			acc_tick = 0;
 			nCount++;
 			system("clear");
-			putTile(nCount,nCount+4,0,8,8,pstr);
+			putTile2(nCount,nCount+6,0,8,16,pstr);
 		
 		}
 

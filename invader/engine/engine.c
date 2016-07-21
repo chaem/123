@@ -9,7 +9,7 @@
 #include <windows.h>
 
 #include "engine.h"
-////////////////////////////////// Title
+//////////////////// Title ////////////////////
 void titleCell(int data)
 {
     switch(data) {
@@ -44,7 +44,7 @@ void draw_mainTitle(int *dt)
     }
 }
 
-////////////////////////////////////////////////////////////
+//////////////////// time ////////////////////
 struct termios orig_termios;
 
 void reset_terminal_mode()
@@ -66,6 +66,7 @@ void set_conio_terminal_mode()
 	tcsetattr(0, TCSANOW, &new_termios);
 }
 
+//////////////////// cmd ////////////////////
 int kbhit()
 {
 	struct timeval tv = { 0L, 0L };

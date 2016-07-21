@@ -10,7 +10,7 @@ net.createServer((socket)=> {
    console.log('connect : ' + socket.remoteAddress + ':' + socket.remotePort);
     // 누군가 들어오면 호출되는 부분
 
-    // 자동으로 아래처럼 처리된다
+    /////////// 자동으로 아래처럼 처리된다 ///////////
     socket.on('error',(evt)=> {  // 에러가 발생하면
        console.log(evt);
     });

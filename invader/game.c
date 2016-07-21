@@ -58,7 +58,8 @@ void gameStart_Title()
 	}
 
 }
-//////////////////
+
+////////////////////
 void gameStart_Play()
 {
     switch(nStep) {
@@ -87,7 +88,7 @@ void gameStart_Play()
 
 }
 
-//////////////////
+
 struct timespec work_timer;
 double acc_tick,last_tick;
 
