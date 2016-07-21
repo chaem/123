@@ -10,6 +10,7 @@
 
 #include "../engine/engine2d.h"
 #include "../mapeditor/map.h"
+
 #include "bullet.h"
 #include "alien.h"
 #include "plane.h"
@@ -20,15 +21,15 @@ int bLoop = 1;
 
 _S_MAP_OBJECT gScreenBuf[2];
 
-_S_MAP_OBJECT gAlienModel;
-_S_MAP_OBJECT gBulletModel;
 _S_MAP_OBJECT gPlaneModel;
-_S_MAP_OBJECT gLaserModel;
+_S_MAP_OBJECT gAlienModel;
+_S_MAP_OBJECT gBulletModel;  //alienAttack
+_S_MAP_OBJECT gLaserModel;  //playerAttack
 
-_S_ALIEN_OBJECT gTestAlienObject;
-_S_BULLET_OBJECT gTestBulletObject;
 _S_Plane gPlaneObject;
-_S_LASER_OBJECT gLaserObject;
+_S_ALIEN_OBJECT gTestAlienObject[8];
+_S_BULLET_OBJECT gTestBulletObject;  //alienAttack
+_S_LASER_OBJECT gLaserObject;  //playerAttack
 
 int main()
 {
@@ -36,35 +37,41 @@ int main()
 	for(int i=0;i<2;i++)
 	{
 		map_init(&gScreenBuf[i]);
-		map_new(&gScreenBuf[i],35,22);
+		map_new(&gScreenBuf[i],35,40);
 
 	}
+
+	map_init(&gPlaneModel);
+	map_load(&gPlaneModel,"player.dat");
 
 	map_init(&gAlienModel);
 	map_load(&gAlienModel,"alien.dat");
 
 	map_init(&gBulletModel);
-	map_load(&gBulletModel,"bullet.dat");
-
-	map_init(&gPlaneModel);
-	map_load(&gPlaneModel,"plane.dat");
+	map_load(&gBulletModel,"bullet1.dat");
 
 	map_init(&gLaserModel);
-	map_load(&gLaserModel,"laser.dat");
+	map_load(&gLaserModel,"arrow.dat");
 
-	alien_init(&gTestAlienObject,&gAlienModel);
-	bullet_init(&gTestBulletObject,0,0,0,&gBulletModel);
+	double TablePosition[] = {0,6.0,12.0,18.0,24.0,30.0};
+	for(int i=0;i<6;i++)
+	{
+		_S_ALIEN_OBJECT *pObj = &gTestAlienObject[i];
+		alien_init(pObj,&gAlienModel);
+		pObj->m_fXpos = TablePosition[i];
+		pObj->m_fYpos = 2;
+		pObj->m_nFSM = 1;
+	}
+
 	Plane_init(&gPlaneObject,&gPlaneModel,0,0);
+	bullet_init(&gTestBulletObject,0,0,0,&gBulletModel);
 	laser_init(&gLaserObject,0,0,0,&gLaserModel);
 
-	gTestAlienObject.m_pBullet = &gTestBulletObject;
+	gTestAlienObject[0].m_pBullet = &gTestBulletObject;
 	
 	gPlaneObject.m_fXpos = 17;
-	gPlaneObject.m_fYpos = 20;
+	gPlaneObject.m_fYpos = 38;
 	gPlaneObject.m_nFSM = 1;
-	gTestAlienObject.m_fXpos = -10;
-	gTestAlienObject.m_fYpos = 1;
-	gTestAlienObject.m_nFSM = 1;
 	
 	system("clear");
 	
@@ -108,10 +115,13 @@ int main()
 
 		}
 
-		//gPlaneObject.pfApply(&gPlaneObject,delta_tick,ch);
+		for(int i=0;i<6;i++ ) 
+			{
+				_S_ALIEN_OBJECT *pObj = &gTestAlienObject[i];
+				pObj->pfApply(pObj,delta_tick);
 
-
-		gTestAlienObject.pfApply(&gTestAlienObject,delta_tick);
+			}
+			
 		gTestBulletObject.pfApply(&gTestBulletObject,delta_tick);
 		gLaserObject.pfApply(&gLaserObject,delta_tick);
 
@@ -133,42 +143,19 @@ int main()
 			}
 
 		}
-			/*
-			if(dist < 2) {
-				gTestBulletObject.m_nFSM = 0;
-				gPlaneObject.m_nFSM = 0;
-			}
-			*/
-		
-/*
-		if (gLaserObject.m_nFSM != 0) {
-				double laser_pos_x = gLaserObject.m_fXpos;
-				double laser_pos_y = gLaserObject.m_fYpos;
-			
-				double target_pos_x2 = gTestAlienObject.m_fXpos;
-				double target_pos_y2 = gTestAlienObject.m_fYpos;
 
-				double v2x = target_pos_x2 + laser_pos_x;
-				double v2y = target_pos_y2 + laser_pos_y;
-				double dist2  = sqrt(v2x*v2x+v2y*v2y);
-				v2x /= dist2;
-				v2y /= dist2;
-
-				if(dist2 < 2) {
-				gLaserObject.m_nFSM = 0;
-				gTestAlienObject.m_nFSM = 0;
-			}
-		}
-*/		
 		//타이밍 계산 
 		acc_tick += delta_tick;
 		if(acc_tick > 0.1) {
 			gotoxy(0,0);
 			map_drawTile(&gScreenBuf[0],0,0,&gScreenBuf[1]);
 
-			setColor(33,40);
 			gPlaneObject.pfDraw(&gPlaneObject,&gScreenBuf[1]);
-			gTestAlienObject.pfDraw(&gTestAlienObject,&gScreenBuf[1]);
+			for(int i=0;i<6;i++ ) 
+			{
+				_S_ALIEN_OBJECT *pObj = &gTestAlienObject[i];
+				pObj->pfDraw(pObj,&gScreenBuf[1]);
+			}
 			gTestBulletObject.pfDraw(&gTestBulletObject,&gScreenBuf[1]);
 			gLaserObject.pfDraw(&gLaserObject,&gScreenBuf[1]);
 

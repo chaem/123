@@ -33,7 +33,7 @@ int main()
 	width = atoi(pTemp);
 	pTemp = strtok(NULL,",");
 	height = atoi(pTemp);
-	//puts(pTemp);
+	puts(pTemp);
 
 	pMapBuf = (char *)malloc(width*height);
 

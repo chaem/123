@@ -13,6 +13,4 @@ int getch();
 void setColor(int fore_color, int backg_color);
 void gotoxy(int x, int y);
 
-
-
 #endif
