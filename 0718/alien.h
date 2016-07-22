@@ -24,4 +24,29 @@ typedef struct _S_ALIEN_OBJECT {
 
 void alien_init(_S_ALIEN_OBJECT *pObj,_S_MAP_OBJECT *pBody);
 
+
+////////////////////////////////
+typedef struct _S_ALIEN_OBJECT2 {
+
+	int m_nFSM;
+	int m_nStep;
+
+	double m_fXpos;
+	double m_fYpos;
+
+	double m_fCenterX;
+	double m_fCenterY;
+
+	double m_fSpeed;
+
+	_S_MAP_OBJECT *m_pBody;
+	_S_BULLET_OBJECT *m_pBullet;
+
+	void (*pfApply2)(struct _S_ALIEN_OBJECT2 *,double);
+	void (*pfDraw2)(struct _S_ALIEN_OBJECT2 *,_S_MAP_OBJECT * );
+
+} _S_ALIEN_OBJECT2;
+
+void alien_init2(_S_ALIEN_OBJECT2 *pObj,_S_MAP_OBJECT *pBody);
+
 #endif

@@ -31,7 +31,7 @@ _S_MAP_OBJECT gLaserModel;  //playerAttack
 _S_Plane gPlaneObject;
 _S_ALIEN_OBJECT gTestAlienObject[10];  //alien2
 _S_BULLET_OBJECT gTestBulletObject[10];  //alien2
-_S_ALIEN_OBJECT gTestAlienObject2[5];  //alien3
+_S_ALIEN_OBJECT2 gTestAlienObject2[5];  //alien3
 _S_BULLET_OBJECT gTestBulletObject2[5];  //alien3
 _S_BULLET_OBJECT gLaserObject[32];  //playerAttack
 
@@ -65,7 +65,7 @@ int main()
 	Plane_init(&gPlaneObject,&gPlaneModel,0,0);
 
 	double TablePosition[] = {-50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -5.0};
-	//double TablePosition2[] = {-30,-20,-10};
+	double TablePosition2[] = {45,40,35,30,25};
 
 	//alien2
 	for(int i=0;i<10;i++)
@@ -81,12 +81,12 @@ int main()
 	//alien3
 	for(int i=0;i<5;i++)
 	{
-		_S_ALIEN_OBJECT *pObj = &gTestAlienObject2[i];
-		alien_init(pObj,&gAlienModel2);
-		pObj->m_fXpos = TablePosition[i];
+		_S_ALIEN_OBJECT2 *pObj = &gTestAlienObject2[i];
+		alien_init2(pObj,&gAlienModel2);
+		pObj->m_fXpos = TablePosition2[i];
 		pObj->m_fYpos = 2;
 		pObj->m_nFSM = 1;
-		gTestAlienObject[i].m_pBullet = &gTestBulletObject2[i];
+		gTestAlienObject2[i].m_pBullet = &gTestBulletObject2[i];
 	}
 	
 	//player attack
@@ -117,7 +117,7 @@ int main()
 	acc_tick=last_tick=0;
 
 	while(bLoop) {
-		//타이밍처리 
+		//타이밍처리
 		clock_gettime(CLOCK_MONOTONIC,&work_timer);
 		double cur_tick = work_timer.tv_sec + 
 			(double)(work_timer.tv_nsec * 1e-9);
@@ -170,8 +170,8 @@ int main()
 
 		//alien3
 		for (int i=0; i<5; i++) {
-			_S_ALIEN_OBJECT *pObj = &gTestAlienObject2[i];
-			pObj->pfApply(pObj,delta_tick);
+			_S_ALIEN_OBJECT2 *pObj = &gTestAlienObject2[i];
+			pObj->pfApply2(pObj,delta_tick);
 		}
 
 		//alien2 - attack
@@ -242,8 +242,8 @@ int main()
 			//alien3
 			for(int i=0; i<5; i++ )
 			{
-				_S_ALIEN_OBJECT *pObj = &gTestAlienObject2[i];
-				pObj->pfDraw(pObj,&gScreenBuf[1]);
+				_S_ALIEN_OBJECT2 *pObj = &gTestAlienObject2[i];
+				pObj->pfDraw2(pObj,&gScreenBuf[1]);
 			}
 
 			//alien2 attack

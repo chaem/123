@@ -31,10 +31,10 @@ void Plane_Apply(_S_Plane *pObj,double deltaTick,char key_input)
 			}
 
 			break;
-
 	}
 
 }
+
 void Plane_Draw(_S_Plane *pObj, _S_MAP_OBJECT *pBuff)
 {
 	switch(pObj->m_nFSM) 
