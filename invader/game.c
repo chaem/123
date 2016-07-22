@@ -8,11 +8,8 @@
 #include <termios.h>
 #include <windows.h>
 
-#include "../engine/engine2d.h"
+#include "engine/engine.c"
 #include "../mapeditor/map.h"
-#include "bullet.h"
-#include "alien.h"
-#include "plane.h"
 
 int loading_screen[] = {
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
